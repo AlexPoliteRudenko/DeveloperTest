@@ -31,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User createUser(User user) throws UserAlreadyExistsException {
         if (db.contains(user)) {
-            throw new UserAlreadyExistsException("A user with the given username already exists", "USER_ALREADY_EXISTS");
+            throw new UserAlreadyExistsException();
         } else {
             user.setId(generateId(user));
             user.setHashedPassword(passwordEncoder.encode(user.getPlainTextPassword()));

@@ -13,11 +13,11 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorMessage> exceptionHandler(Exception ex) {
         ErrorMessage error = new ErrorMessage("INTERNAL_SERVER_ERROR", "Please contact your administrator");
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
     @ExceptionHandler(ApplicationException.class)
     public ResponseEntity<ErrorMessage> applicationExceptionHandler(ApplicationException ex) {
-        return new ResponseEntity<>(new ErrorMessage(ex.getCode(), ex.getMessage()), ex.getStatus());
+        return ResponseEntity.status(ex.getStatus()).body(new ErrorMessage(ex.getCode(), ex.getMessage()));
     }
 }

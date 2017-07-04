@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 
 public class ApplicationException extends Exception {
 
-    protected String code;
-    protected HttpStatus status;
+    private String code;
+    private HttpStatus status;
 
     public String getCode() {
         return code;
@@ -15,8 +15,10 @@ public class ApplicationException extends Exception {
         return status;
     }
 
-    public ApplicationException(String message) {
+    public ApplicationException(String message, String code, HttpStatus status) {
         super(message);
+        this.code = code;
+        this.status = status;
     }
 
 

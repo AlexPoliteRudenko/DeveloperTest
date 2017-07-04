@@ -65,7 +65,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void addExistedUserThrowsNullPointerException() throws Exception {
+    public void addWrongValueReturnError() throws Exception {
         mvc.perform(post("/userservice/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(convertObjectToJsonBytes("{Wrong value}")))
