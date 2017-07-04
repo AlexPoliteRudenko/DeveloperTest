@@ -10,13 +10,13 @@ public class PopulateDb {
 
     public static Set<User> populate() {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        Set<User> db = new HashSet<>();
         User user0 = new User("John", "Smith", "Agent", "MyMatrix");
         User user1 = new User("Mr", "Andersen", "Neo", "TheOne");
         user0.setHashedPassword(passwordEncoder.encode(user0.getPlainTextPassword()));
         user0.setId(Integer.toString(user0.getUserName().hashCode()));
         user1.setId(Integer.toString(user1.getUserName().hashCode()));
         user1.setHashedPassword(passwordEncoder.encode(user1.getPlainTextPassword()));
+        Set<User> db = new HashSet<>();
         db.add(user0);
         db.add(user1);
         return db;

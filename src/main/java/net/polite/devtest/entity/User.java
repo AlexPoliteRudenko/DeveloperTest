@@ -24,11 +24,15 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
 
-        User user = (User) o;
+        User user = (User) obj;
 
         return userName != null ? userName.equals(user.userName) : user.userName == null;
     }

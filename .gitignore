@@ -85,3 +85,4 @@ hs_err_pid*
 /DeveloperTest.iml
 /mvnw.cmd
 /mvnw
+/checkstyle_config.xml
