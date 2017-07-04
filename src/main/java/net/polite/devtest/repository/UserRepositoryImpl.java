@@ -1,10 +1,14 @@
 package net.polite.devtest.repository;
 
 import net.polite.devtest.exceptions.UserAlreadyExistsException;
+import net.polite.devtest.repository.entities.ErrorMessage;
 import net.polite.devtest.repository.entities.User;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class UserRepositoryImpl implements UserRepository {
@@ -28,7 +32,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User createUser(User user) throws UserAlreadyExistsException {
         if (db.contains(user)) {
-            throw new UserAlreadyExistsException("A user with the given username already exists");
+            throw new UserAlreadyExistsException(new ErrorMessage("USER_ALREADY_EXISTS","A user with the given username already exists"));
         } else {
             user.setId(generateId(user));
             db.add(user);
