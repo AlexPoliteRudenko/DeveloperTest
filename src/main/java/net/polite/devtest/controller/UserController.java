@@ -1,14 +1,15 @@
-package net.polite.devtest.controllers;
+package net.polite.devtest.controller;
 
-import net.polite.devtest.exceptions.UserAlreadyExistsException;
+import net.polite.devtest.entity.User;
+import net.polite.devtest.exception.UserAlreadyExistsException;
 import net.polite.devtest.repository.UserRepository;
-import net.polite.devtest.repository.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/userservice")
@@ -23,13 +24,8 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> createUser(@RequestBody User user) throws UserAlreadyExistsException {
-        userRepository.createUser(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
-    }
-
-    @GetMapping("/user")
-    public ResponseEntity<List<User>> getAllUsers() {
-        return new ResponseEntity<>(userRepository.getAll(), HttpStatus.OK);
+        User newUser = userRepository.createUser(user);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
 }

@@ -1,4 +1,4 @@
-package net.polite.devtest.repository.entities;
+package net.polite.devtest.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,7 +9,6 @@ public class User {
     private String firstName;
     private String lastName;
     private String userName;
-
     private String plainTextPassword;
     @JsonIgnore
     private String hashedPassword;

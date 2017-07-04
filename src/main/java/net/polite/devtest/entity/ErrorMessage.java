@@ -1,4 +1,4 @@
-package net.polite.devtest.repository.entities;
+package net.polite.devtest.entity;
 
 public class ErrorMessage {
 

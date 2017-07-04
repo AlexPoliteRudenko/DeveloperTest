@@ -1,28 +1,27 @@
 package net.polite.devtest.repository;
 
-import net.polite.devtest.exceptions.UserAlreadyExistsException;
-import net.polite.devtest.repository.entities.ErrorMessage;
-import net.polite.devtest.repository.entities.User;
+import net.polite.devtest.entity.User;
+import net.polite.devtest.exception.UserAlreadyExistsException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Component
 public class UserRepositoryImpl implements UserRepository {
-    private Set<User> db;
 
-    public UserRepositoryImpl() {
-        db = new HashSet<>();
-        User user0 = new User("John", "Smith", "Agent", "MyMatrix");
-        User user1 = new User("Mr", "Andersen", "Neo", "TheOne");
-        user0.setId(generateId(user0));
-        user1.setId(generateId(user1));
-        db.add(user0);
-        db.add(user1);
+    private Set<User> db;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserRepositoryImpl(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+        db = PopulateDb.populate();
     }
+
 
     @Override
     public List<User> getAll() {
@@ -32,9 +31,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User createUser(User user) throws UserAlreadyExistsException {
         if (db.contains(user)) {
-            throw new UserAlreadyExistsException(new ErrorMessage("USER_ALREADY_EXISTS","A user with the given username already exists"));
+            throw new UserAlreadyExistsException("A user with the given username already exists", "USER_ALREADY_EXISTS");
         } else {
             user.setId(generateId(user));
+            user.setHashedPassword(passwordEncoder.encode(user.getPlainTextPassword()));
             db.add(user);
             return user;
         }
